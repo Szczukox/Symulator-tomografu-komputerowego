@@ -21,7 +21,7 @@ def bresenham(x1, y1, x2, y2, input_image, sinogram_value, output_image):
 
     # zaznaczenie pierwszego piksela
     if sinogram_value is None or output_image is None:
-        suma += input_image[x][y][0]
+        suma += input_image[x][y]
     else:
         output_image[x][y] += sinogram_value
 
@@ -44,7 +44,7 @@ def bresenham(x1, y1, x2, y2, input_image, sinogram_value, output_image):
                 x += xi
 
             if sinogram_value is None or output_image is None:
-                suma += input_image[x][y][0]
+                suma += input_image[x][y]
             else:
                 output_image[x][y] += sinogram_value
 
@@ -67,7 +67,7 @@ def bresenham(x1, y1, x2, y2, input_image, sinogram_value, output_image):
                 y += yi
 
             if sinogram_value is None or output_image is None:
-                suma += input_image[x][y][0]
+                suma += input_image[x][y]
             else:
                 output_image[x][y] += sinogram_value
 
