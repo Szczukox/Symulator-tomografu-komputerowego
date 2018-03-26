@@ -1,6 +1,7 @@
 import math
 import numpy as np
 from bresenham import *
+from sklearn import metrics
 
 
 def tomograf(input_image, step, d, beta, iterations):
@@ -40,6 +41,8 @@ def tomograf(input_image, step, d, beta, iterations):
 
     sinogram = ((sinogram - np.min(sinogram)) / (np.max(sinogram) - np.min(sinogram))) * 256
     output_image = ((output_image - np.min(output_image)) / (np.max(output_image) - np.min(output_image))) * 256
+    mse = metrics.mean_squared_error(input_image/256,output_image/256)
+    print(mse)
 
     # cv2.imwrite("sinogram.jpg", sinogram)
     # cv2.imwrite("output_image.jpg", output_image)
