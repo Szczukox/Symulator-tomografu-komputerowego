@@ -10,6 +10,7 @@ def tomograf(input_image, step, d, beta, iterations):
     x_przes = input_image.shape[0] / 2
     y_przes = input_image.shape[1] / 2
 
+    visited = np.ones(shape=(input_image.shape[0], input_image.shape[1]))
     sinogram = np.ndarray(shape=(len(range(0, 360, step)), d))
     output_image = np.zeros(shape=(input_image.shape[0], input_image.shape[1]))
 
@@ -22,12 +23,18 @@ def tomograf(input_image, step, d, beta, iterations):
             d_y = math.sin(alfa) * r + y_przes
 
             sinogram[angle // step][i] = bresenham(round(e_x), round(e_y), round(d_x), round(d_y), input_image, None,
-                                                   None)
+                                                   None, visited)
             bresenham(round(e_x), round(e_y), round(d_x), round(d_y), input_image, sinogram[angle // step][i],
-                      output_image)
+                      output_image, None)
+
+    output_image /= visited
+
+    output_image_fllaten = output_image.flatten()
+    output_image_list = list(set(output_image_fllaten))
+    output_image_list.sort()
 
     sinogram = ((sinogram - np.min(sinogram)) / (np.max(sinogram) - np.min(sinogram))) * 256
-    output_image = ((output_image - np.min(output_image)) / (np.max(output_image) - np.min(output_image))) * 256
+    output_image = ((output_image - min(output_image_list)) / (max(output_image_list) - min(output_image_list))) * 256
 
     # cv2.imwrite("sinogram.jpg", sinogram)
     # cv2.imwrite("output_image.jpg", output_image)

@@ -22,9 +22,14 @@ def update_step(event):
     step = scale_step.get()
     d = scale_detector.get()
     beta = scale_beta.get()
-    iterations = scale_iterations.get()
     scale_iterations.configure(to=len(range(0, 360, step)))
+    scale_iterations.set(len(range(0, 360, step)))
+    iterations = scale_iterations.get()
+
+    label_status.config(text="OCZEKIWANIE...", fg="red")
+    f.update()
     sinogram, output_image = tomograf(input_image, step, d, beta, iterations)
+    label_status.config(text="GOTOWE!!!", fg="green")
 
     new_sinogram = Image.fromarray(sinogram)
     resized_new_sinogram = new_sinogram.resize((WIDTH_IMAGE, HEIGHT_IMAGE), Image.NEAREST)
@@ -44,7 +49,11 @@ def update_detector(event):
     d = scale_detector.get()
     beta = scale_beta.get()
     iterations = scale_iterations.get()
+
+    label_status.config(text="OCZEKIWANIE...", fg="red")
+    f.update()
     sinogram, output_image = tomograf(input_image, step, d, beta, iterations)
+    label_status.config(text="GOTOWE!!!", fg="green")
 
     new_sinogram = Image.fromarray(sinogram)
     resized_new_sinogram = new_sinogram.resize((WIDTH_IMAGE, HEIGHT_IMAGE), Image.NEAREST)
@@ -64,7 +73,11 @@ def update_beta(event):
     d = scale_detector.get()
     beta = scale_beta.get()
     iterations = scale_iterations.get()
+
+    label_status.config(text="OCZEKIWANIE...", fg="red")
+    f.update()
     sinogram, output_image = tomograf(input_image, step, d, beta, iterations)
+    label_status.config(text="GOTOWE!!!", fg="green")
 
     new_sinogram = Image.fromarray(sinogram)
     resized_new_sinogram = new_sinogram.resize((WIDTH_IMAGE, HEIGHT_IMAGE), Image.NEAREST)
@@ -84,7 +97,11 @@ def update_iterations(event):
     d = scale_detector.get()
     beta = scale_beta.get()
     iterations = scale_iterations.get()
+
+    label_status.config(text="OCZEKIWANIE...", fg="red")
+    f.update()
     sinogram, output_image = tomograf(input_image, step, d, beta, iterations)
+    label_status.config(text="GOTOWE!!!", fg="green")
 
     new_sinogram = Image.fromarray(sinogram)
     resized_new_sinogram = new_sinogram.resize((WIDTH_IMAGE, HEIGHT_IMAGE), Image.NEAREST)
@@ -179,5 +196,9 @@ input_image3 = Image.fromarray(output_image)
 resized3 = input_image3.resize((WIDTH_IMAGE, HEIGHT_IMAGE), Image.NEAREST)
 input_image3 = ImageTk.PhotoImage(resized3)
 output_image_on_canvas = f.create_image(1036, 300, image=input_image3)
+
+label_status = Label(root, text="GOTOWE!!!", fg="green", font=("Courier", 44))
+label_status.pack()
+label_status.place(x=WIDTH_WINDOW // 2, y=HEIGHT_WINDOW - 125)
 
 root.mainloop()
