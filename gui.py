@@ -1,4 +1,5 @@
 from tkinter import *
+import cv2
 from PIL import Image
 from PIL import ImageTk
 from tomo import *
@@ -27,9 +28,11 @@ def update_step(event):
     iterations = scale_iterations.get()
 
     label_status.config(text="OCZEKIWANIE...", fg="red")
+    label_status.place(x=WIDTH_WINDOW - 395, y=HEIGHT_WINDOW - 125)
     f.update()
     sinogram, output_image = tomograf(input_image, step, d, beta, iterations)
     label_status.config(text="GOTOWE!!!", fg="green")
+    label_status.place(x=WIDTH_WINDOW - 325, y=HEIGHT_WINDOW - 125)
 
     new_sinogram = Image.fromarray(sinogram)
     resized_new_sinogram = new_sinogram.resize((WIDTH_IMAGE, HEIGHT_IMAGE), Image.NEAREST)
@@ -51,9 +54,11 @@ def update_detector(event):
     iterations = scale_iterations.get()
 
     label_status.config(text="OCZEKIWANIE...", fg="red")
+    label_status.place(x=WIDTH_WINDOW - 395, y=HEIGHT_WINDOW - 125)
     f.update()
     sinogram, output_image = tomograf(input_image, step, d, beta, iterations)
     label_status.config(text="GOTOWE!!!", fg="green")
+    label_status.place(x=WIDTH_WINDOW - 325, y=HEIGHT_WINDOW - 125)
 
     new_sinogram = Image.fromarray(sinogram)
     resized_new_sinogram = new_sinogram.resize((WIDTH_IMAGE, HEIGHT_IMAGE), Image.NEAREST)
@@ -75,9 +80,11 @@ def update_beta(event):
     iterations = scale_iterations.get()
 
     label_status.config(text="OCZEKIWANIE...", fg="red")
+    label_status.place(x=WIDTH_WINDOW - 395, y=HEIGHT_WINDOW - 125)
     f.update()
     sinogram, output_image = tomograf(input_image, step, d, beta, iterations)
     label_status.config(text="GOTOWE!!!", fg="green")
+    label_status.place(x=WIDTH_WINDOW - 325, y=HEIGHT_WINDOW - 125)
 
     new_sinogram = Image.fromarray(sinogram)
     resized_new_sinogram = new_sinogram.resize((WIDTH_IMAGE, HEIGHT_IMAGE), Image.NEAREST)
@@ -99,9 +106,11 @@ def update_iterations(event):
     iterations = scale_iterations.get()
 
     label_status.config(text="OCZEKIWANIE...", fg="red")
+    label_status.place(x=WIDTH_WINDOW - 395, y=HEIGHT_WINDOW - 125)
     f.update()
     sinogram, output_image = tomograf(input_image, step, d, beta, iterations)
     label_status.config(text="GOTOWE!!!", fg="green")
+    label_status.place(x=WIDTH_WINDOW - 325, y=HEIGHT_WINDOW - 125)
 
     new_sinogram = Image.fromarray(sinogram)
     resized_new_sinogram = new_sinogram.resize((WIDTH_IMAGE, HEIGHT_IMAGE), Image.NEAREST)
@@ -140,7 +149,7 @@ sinogram, output_image = tomograf(input_image, step, d, beta, iterations)
 label_step = Label(root, text="Krok:")
 label_step.pack()
 label_step.place(x=50, y=528)
-scale_step = Scale(root, from_=1, to=90, orient=HORIZONTAL)
+scale_step = Scale(root, from_=1, to=90, orient=HORIZONTAL, length=565)
 scale_step.set(step)
 scale_step.pack()
 scale_step.place(x=250, y=510)
@@ -149,7 +158,7 @@ scale_step.bind("<ButtonRelease-1>", update_step)
 label_detector = Label(root, text="Liczba rzutów na detektory:")
 label_detector.pack()
 label_detector.place(x=50, y=568)
-scale_detector = Scale(root, from_=1, to=1000, orient=HORIZONTAL)
+scale_detector = Scale(root, from_=1, to=1000, orient=HORIZONTAL, length=565)
 scale_detector.set(d)
 scale_detector.pack()
 scale_detector.place(x=250, y=550)
@@ -158,7 +167,7 @@ scale_detector.bind("<ButtonRelease-1>", update_detector)
 label_beta = Label(root, text="Kąt rozwarcia:")
 label_beta.pack()
 label_beta.place(x=50, y=608)
-scale_beta = Scale(root, from_=1, to=360, orient=HORIZONTAL)
+scale_beta = Scale(root, from_=1, to=360, orient=HORIZONTAL, length=565)
 scale_beta.set(beta)
 scale_beta.pack()
 scale_beta.place(x=250, y=590)
@@ -167,7 +176,7 @@ scale_beta.bind("<ButtonRelease-1>", update_beta)
 label_iterations = Label(root, text="Liczba iteracji:")
 label_iterations.pack()
 label_iterations.place(x=50, y=648)
-scale_iterations = Scale(root, from_=1, to=(len(range(0, 360, step))), orient=HORIZONTAL)
+scale_iterations = Scale(root, from_=1, to=(len(range(0, 360, step))), orient=HORIZONTAL, length=565)
 scale_iterations.set(iterations)
 scale_iterations.pack()
 scale_iterations.place(x=250, y=630)
@@ -197,8 +206,8 @@ resized3 = input_image3.resize((WIDTH_IMAGE, HEIGHT_IMAGE), Image.NEAREST)
 input_image3 = ImageTk.PhotoImage(resized3)
 output_image_on_canvas = f.create_image(1036, 300, image=input_image3)
 
-label_status = Label(root, text="GOTOWE!!!", fg="green", font=("Courier", 44))
+label_status = Label(root, text="GOTOWE!!!", fg="green", font=("Courier", 32))
 label_status.pack()
-label_status.place(x=WIDTH_WINDOW // 2, y=HEIGHT_WINDOW - 125)
+label_status.place(x=WIDTH_WINDOW - 325, y=HEIGHT_WINDOW - 125)
 
 root.mainloop()

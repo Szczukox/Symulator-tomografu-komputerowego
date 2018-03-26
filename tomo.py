@@ -1,6 +1,5 @@
 import math
 import numpy as np
-import cv2
 from bresenham import *
 
 
@@ -18,7 +17,10 @@ def tomograf(input_image, step, d, beta, iterations):
         e_x = math.cos(math.radians(angle)) * r + x_przes
         e_y = math.sin(math.radians(angle)) * r + y_przes
         for i in range(0, d):
-            alfa = math.radians(angle) + math.pi - (math.radians(beta) / 2) + (i * (math.radians(beta)) / (d - 1))
+            if d == 1:
+                alfa = math.radians(angle) + math.pi - (math.radians(beta) / 2)
+            else:
+                alfa = math.radians(angle) + math.pi - (math.radians(beta) / 2) + (i * (math.radians(beta)) / (d - 1))
             d_x = math.cos(alfa) * r + x_przes
             d_y = math.sin(alfa) * r + y_przes
 
@@ -32,9 +34,12 @@ def tomograf(input_image, step, d, beta, iterations):
     output_image_fllaten = output_image.flatten()
     output_image_list = list(set(output_image_fllaten))
     output_image_list.sort()
+    output_image_list.remove(0)
+
+    output_image[output_image == 0] = min(output_image_list)
 
     sinogram = ((sinogram - np.min(sinogram)) / (np.max(sinogram) - np.min(sinogram))) * 256
-    output_image = ((output_image - min(output_image_list)) / (max(output_image_list) - min(output_image_list))) * 256
+    output_image = ((output_image - np.min(output_image)) / (np.max(output_image) - np.min(output_image))) * 256
 
     # cv2.imwrite("sinogram.jpg", sinogram)
     # cv2.imwrite("output_image.jpg", output_image)
